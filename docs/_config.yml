@@ -34,7 +34,7 @@ timezone: Asia/Shanghai
 ## => Author and Social
 ##############################
 author:
-  type      : organization # "person" (default), "organization"
+  type      : person # "person" (default), "organization"
   name      : TeXt
   url       :
   avatar    : /assets/apple-touch-icon.png
@@ -44,8 +44,8 @@ author:
   email     : kitian616@outlook.com
   facebook  :
   twitter   : kitian616
-  weibo     : 234695683
-  googleplus: 101827554735084402671
+  weibo     : 
+  googleplus: 
   telegram  :
   medium    :
   zhihu     :
