@@ -4,11 +4,7 @@ title: Research on Snowball Option--Introduction
 mathjax: true
 ---
 
-
-
-
-You may want to [config the site](https://kitian616.github.io/jekyll-TeXt-theme/docs/en/configuration) or [writing a post](https://kitian616.github.io/jekyll-TeXt-theme/docs/en/writing-posts) next. Please feel free to [create an issue](https://github.com/kitian616/jekyll-TeXt-theme/issues) or [send me email](mailto:kitian616@outlook.com) if you have any questions.
-
+This article serves as a summary of my research and learning in the area of options. It is the first in a series focusing on this subject matter: introducing Snowball options and calculating their value.
 <!--more-->
 
 ---
@@ -24,6 +20,9 @@ Snowball options are a type of path-dependent exotic derivative that has been ga
   - [2.1 Modeling Options:](#21-modeling-options)
   - [2.2 MC Method](#22-mc-method)
 - [3. Theoretical result of snowball option ](#3-theoretical-result-of-snowball-option-)
+  - [3.1 Results Analysis](#31-results-analysis)
+  - [3.2 Option Price](#32-option-price)
+  - [3.3 Computational Efficiency Issues](#33-computational-efficiency-issues)
 - [4. My comments on snowball option](#4-my-comments-on-snowball-option)
 
 
@@ -106,8 +105,24 @@ The complete code can be found in the linked document, which includes both the p
 
 
 # 3. Theoretical result of snowball option <a id="result"></a>
+## 3.1 Results Analysis
+Based on the Monte Carlo simulation results, the return on this option is approximately 5.07%. This implies that its value is about 5.07% of the notional principal amount. Upon observing the return profile, it can be discerned that it consists of three parts: knock-out returns that are Poisson-like distributed, knock-in losses that resemble a normal distribution, and a "smooth landing" that constitutes its own category. In fact, this third component is a significant part of the overall return, contributing roughly +3%.
 
-Content for section 3.
+After considering discounting, the maximum return stands at around 19%, while the maximum loss could be as high as 38%. As evident, the variance of this instrument is quite high. This is further supported by its high standard deviation of 10%, which aligns with the principle behind such structured products: exploiting high volatility to achieve high structured yields while simultaneously concealing the potential for massive losses under certain circumstances.
+
+## 3.2 Option Price
+So, the question arises, what is the option pricing for this instrument? Surprisingly, it's often zero. That is to say, if we don't consider any hedges, the seller of the Snowball option is typically operating at a loss. Generally, under a zero pricing premise, the product can be sold at a minimal loss by fine-tuning the returns. Of course, investors are usually required to post a certain amount of margin, say 25%, which remains in the seller's account during the life of the option, thereby generating risk-free returns. However, even when considering this, the Snowball option still holds a value of 4.7%. The allure of the Snowball option is precisely this opportunity to earn money almost 'for free.'
+
+Why can the Snowball option be sold at zero cost? This aspect makes it even more interesting than conventional vanilla call or put options.
+
+Let's illustrate this with an example: suppose you believe that a piece of geologically unstable land contains gold, and you own an expensive automated mining machine. You may be eager to remotely control the machine to dig but are concerned that it may get damaged underground. At this moment, an investor offers to sell you an insurance contract. In exchange, you pay a fixed sum, an offer that you might find tempting.
+
+Indeed, the investor, acting as the put option provider, bears the risk of honoring the insurance contract. As the seller of the option, they don't have to worry about the machine getting damaged but do need to assess whether enough gold can be extracted to make the operation worthwhile. In reality, hedging a Snowball option often involves buying high and selling low, which is usually accompanied by a positive return. This is precisely why it can be sold at a loss; what's needed is essentially the put option as a form of insurance.
+
+In our next article, we will delve deeply into the issue of hedging, which is arguably one of the most critical considerations for anyone working in quantitative finance
+
+## 3.3 Computational Efficiency Issues
+In the corresponding IPython notebook, a rudimentary calculation of this problem shows that it takes approximately 20 seconds to compute 100,000 Monte Carlo paths on my computer. This level of efficiency is clearly unacceptable. The primary reason for this slow performance is the lack of any optimization techniques, coupled with Python's inherently low efficiency when it comes to loops. As we delve deeper into the issue, we will employ various methods to enhance computational speed and make the calculations as fast as possible.
 
 
 # 4. My comments on snowball option
