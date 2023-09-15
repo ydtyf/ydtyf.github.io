@@ -17,17 +17,17 @@ Snowball options are a type of path-dependent exotic derivative that has been ga
   - [1.1 Snowball structure ](#11-snowball-structure-)
   - [1.2 Why it's popular and what might be the risk? ](#12-why-its-popular-and-what-might-be-the-risk-)
 - [2. How to model it? ](#2-how-to-model-it-)
-  - [2.1 Modeling Options: ](#21-modeling-options-)
-  - [2.2 MC Method ](#22-mc-method-)
+  - [2.1 Modeling Options:](#21-modeling-options)
+  - [2.2 MC Method](#22-mc-method)
 - [3. Theoretical result of snowball option ](#3-theoretical-result-of-snowball-option-)
-  - [3.1 Results Analysis ](#31-results-analysis-)
-  - [3.2 Option Price ](#32-option-price-)
-  - [3.3 Computational Efficiency Issues ](#33-computational-efficiency-issues-)
-- [4. My comments on snowball option ](#4-my-comments-on-snowball-option-)
+  - [3.1 Results Analysis](#31-results-analysis)
+  - [3.2 Option Price](#32-option-price)
+  - [3.3 Computational Efficiency Issues](#33-computational-efficiency-issues)
+- [4. My comments on snowball option](#4-my-comments-on-snowball-option)
 
 
 # 1. What is snowball option? <a id="1-what-is-snowball-option-"></a>
-## 1.1 Snowball structure <a id="#11-snowball-structure-"></a>
+## 1.1 Snowball structure <a id="structure"></a>
 A typical snowball option structure encompasses the following components:
 
 1. Underlying Asset: This can be an individual stock, an index, or another financial instrument.
@@ -63,7 +63,7 @@ I will use the following example to discuss the investment returns associated wi
 
 - Knock-In Only Scenario: If only a knock-in event takes place, the investor is considered to have sold a put option. **There would be no return, and the investor bears the loss equivalent to the difference between the initial and terminal prices if the terminal price is lower than the initial price.**
 
-## 1.2 Why it's popular and what might be the risk? <a id='#12-why-its-popular-and-what-might-be-the-risk-'></a>
+## 1.2 Why it's popular and what might be the risk? <a id='popular'></a>
 In the recent Chinese market, snowball options have become exceedingly popular. While there may be multiple factors contributing to this surge in popularity, the primary one appears to be the extraordinarily high returns that these options promise, with their associated risks seemingly being dismissed as inconsequential. Indeed, the typical duration of a snowball option ranges from 1 to 3 years, and the prospect of the underlying asset declining by 20% within this time frame seems implausible to many Chinese investors. This, coupled with China's low-interest-rate environment, explains the allure of snowball options for many. 
 
 While some institutional players are involved, looking to exploit perceived mispricing, the overwhelming majority of investors are entering the market with either sophisticated or naïve expectations of market direction. Interestingly, there tends to be more buyers of snowball options when stock prices are rising than when they are falling, despite the fact that, based on the initial asset prices, purchasing during a downturn would ostensibly offer greater value.
@@ -74,13 +74,13 @@ Take, for instance, the market plunge in April 2022, a time when Shanghai, China
 
 
 
-# 2. How to model it? <a id="#2-how-to-model-it-"></a>
-## 2.1 Modeling Options: <a id='#21-modeling-options'></a>
+# 2. How to model it? <a id="model"></a>
+## 2.1 Modeling Options:
 Modeling financial options is a matter of prime concern for both investors and financial institutions, as it directly impacts investment returns. When it comes to Snowball options, there are generally two approaches: the Monte Carlo (MC) method and the Partial Differential Equation (PDE) method. In this series of articles, I will mainly use the MC method for modeling, which is quite straightforward and offers the most intuitive insight into our results. The PDE method, on the other hand, has its unique advantages in hedging strategies, and I plan to delve into this in a separate, specialized topic.
 
 Recently, machine learning techniques are gaining increased attention in the field. This is an area of personal interest for me, and should there be noteworthy developments in the future, I intend to share them through articles.
 
-## 2.2 MC Method <a id = '#22-mc-method'></a>
+## 2.2 MC Method
 
 Suppose we have:
 
@@ -107,13 +107,13 @@ Given the simplicity of the parameters involved, advanced coding techniques—su
 The complete code can be found in the linked document, which includes both the pure Python code as well as a more readable Jupyter Notebook version. Right now, C++ or Matlab may not be necessary, but we will use them soon on Rainbow option.
 
 
-# 3. Theoretical result of snowball option <a id="#3-theoretical-result-of-snowball-option-"></a>
-## 3.1 Results Analysis <a id="#31-results-analysis"></a>
+# 3. Theoretical result of snowball option <a id="result"></a>
+## 3.1 Results Analysis
 Based on the Monte Carlo simulation results, the return on this option is approximately 5.07%. This implies that its value is about 5.07% of the notional principal amount. Upon observing the return profile, it can be discerned that it consists of three parts: knock-out returns that are Poisson-like distributed, knock-in losses that resemble a normal distribution, and a "smooth landing" that constitutes its own category. In fact, this third component is a significant part of the overall return, contributing roughly +3%.
 
 After considering discounting, the maximum return stands at around 19%, while the maximum loss could be as high as 38%. As evident, the variance of this instrument is quite high. This is further supported by its high standard deviation of 10%, which aligns with the principle behind such structured products: exploiting high volatility to achieve high structured yields while simultaneously concealing the potential for massive losses under certain circumstances.
 
-## 3.2 Option Price <a id="#32-option-price"></a>  
+## 3.2 Option Price
 So, the question arises, what is the option pricing for this instrument? Surprisingly, it's often zero. That is to say, if we don't consider any hedges, the seller of the Snowball option is typically operating at a loss. Generally, under a zero pricing premise, the product can be sold at a minimal loss by fine-tuning the returns. Of course, investors are usually required to post a certain amount of margin, say 25%, which remains in the seller's account during the life of the option, thereby generating risk-free returns. However, even when considering this, the Snowball option still holds a value of 4.7%. The allure of the Snowball option is precisely this opportunity to earn money almost 'for free.'
 
 Why can the Snowball option be sold at zero cost? This aspect makes it even more interesting than conventional vanilla call or put options.
@@ -124,11 +124,11 @@ Indeed, the investor, acting as the put option provider, bears the risk of honor
 
 In our next article, we will delve deeply into the issue of hedging, which is arguably one of the most critical considerations for anyone working in quantitative finance
 
-## 3.3 Computational Efficiency Issues <a id="#33-computational-efficiency-issues"></a>  
+## 3.3 Computational Efficiency Issues
 In the corresponding IPython notebook, a rudimentary calculation of this problem shows that it takes approximately 20 seconds to compute 100,000 Monte Carlo paths on my computer. This level of efficiency is clearly unacceptable. The primary reason for this slow performance is the lack of any optimization techniques, coupled with Python's inherently low efficiency when it comes to loops. As we delve deeper into the issue, we will employ various methods to enhance computational speed and make the calculations as fast as possible.
 
 
-# 4. My comments on snowball option <a id="#4-my-comments-on-snowball-option"></a>  
+# 4. My comments on snowball option
 For any international investor, the snowball option is undoubtedly familiar. It is essentially a non-capital-guaranteed autocall. In this respect, China's financial development is merely imitating and following the international path. In subsequent articles, we will also see that, in order to achieve higher coupon rates, we will employ a "worst-of" strategy by combining multiple underlying assets to attain what is referred to as "target high yield."
 
 However, apart from these tricks, what really appeals to me about these types of options is that the trading parties are not in an adversarial relationship, but rather hold non-conflicting views on the market. They leverage the trader's hedging abilities to progressively realize these views.
