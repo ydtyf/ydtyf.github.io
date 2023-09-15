@@ -83,12 +83,14 @@ Recently, machine learning techniques are gaining increased attention in the fie
 ## 2.2 MC Method
 
 Suppose we have:
+
 $$
 dS_t = \mu S_tdt+\sigma S_t dB_t
 $$
 where $S_t$ is the stock price at t, $\mu$ is the drift rate, $\sigma$ is the volatility and $dB_t = \epsilon * \sqrt{dt}$, $\epsilon$ is the standard normal distribution.
 
 We can get from BS equation:
+
 $$
 S_T = S_t e^{(\mu-\sigma^2/2)(T-t) + \sigma \epsilon \sqrt{T-t}}
 $$
