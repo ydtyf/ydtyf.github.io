@@ -4,18 +4,19 @@ title: Research on Snowball Option--Introduction
 mathjax: true
 ---
 
-This article serves as a summary of my research and learning in the area of options. It is the first in a series focusing on this subject matter: introducing Snowball options and calculating their value.
+This is the second article of the series, discussing how traders can profit from this structure and how to hedge against potential risks.
 <!--more-->
 
 ---
 
-Snowball options are a type of path-dependent exotic derivative that has been gaining increasing traction in the recent Chinese market. One contributing factor to its popularity is its extraordinarily high structured coupon payments, which are particularly appealing in the current low-interest-rate environment in China. However, elevated returns come with increased risks. From the client's perspective, it's imperative to have a thorough understanding of these risks; from a trader's standpoint, it's crucial to comprehend the sources of risk and appropriate hedging strategies. This article serves as a part of a series that ranges from snowball to rainbow options, and will initially focus on snowball options and risk management from the client's perspective.
+Snowball options are a type of path-dependent exotic derivative that has been gaining increasing traction in the recent Chinese market. One contributing factor to its popularity is its extraordinarily high structured coupon payments, which are particularly appealing in the current low-interest-rate environment in China. However, elevated returns come with increased risks. From the client's perspective, it's imperative to have a thorough understanding of these risks; from a trader's standpoint, it's crucial to comprehend the sources of risk and appropriate hedging strategies. This article serves as a part of a series that ranges from snowball to rainbow options, and will initially focus on snowball options and hedge from the trader's perspective.
 
 ## Menu
 
-- [1. What is snowball option? ](#1-what-is-snowball-option-)
-  - [1.1 Snowball structure ](#11-snowball-structure-)
-  - [1.2 Why it's popular and what might be the risk? ](#12-why-its-popular-and-what-might-be-the-risk-)
+- [1. Snowball, a free gift from traders? ](#1-snowball-a-free-gift-from-traders-)
+  - [1.1 Why are snowball options usually free? ](#11-why-are-snowball-options-usually-free-)
+    - [1.1.1 A traditional option](#111-a-traditional-option)
+    - [1.1.2 A snowball option](#112-a-snowball-option)
 - [2. How to model it? ](#2-how-to-model-it-)
   - [2.1 Modeling Options:](#21-modeling-options)
   - [2.2 MC Method](#22-mc-method)
@@ -26,52 +27,26 @@ Snowball options are a type of path-dependent exotic derivative that has been ga
 - [4. My comments on snowball option](#4-my-comments-on-snowball-option)
 
 
-# 1. What is snowball option? <a id="1-what-is-snowball-option-"></a>
-## 1.1 Snowball structure <a id="structure"></a>
-A typical snowball option structure encompasses the following components:
+# 1. Snowball, a free gift from traders? <a id="1-what-is-snowball-option-"></a>
+## 1.1 Why are snowball options usually free? <a id="structure"></a>
+Most market participants understand that there's no such thing as a free lunch. Still, few can precisely elucidate why a trader might be willing to sell a derivative with a **positive present value (PV)** on Day 0 for zero cost. This seems akin to an arbitrage opportunity of the first degree. However, the reality is that if such a lucrative opportunity genuinely existed, traders would preemptively exhaust the liquidity of that product. (As financial professionals, it might be time to dispense with the notion of 'infinity'.) The willingness of traders to seemingly give away these options for free lies in the profitable hedging opportunities they present.
 
-1. Underlying Asset: This can be an individual stock, an index, or another financial instrument.
+### 1.1.1 A traditional option
+Reflecting upon standard calls or puts, when traders sell these options, they often face losses in hedging. The core issue stems from **buying high and selling low**.
 
-2. Knock-Out Level: Generally set extremely close to the initial asset price to entice investors. Knocking out typically leads to extraordinarily high coupon payments, which constitute the primary avenue for investor profit.
+To illustrate this:
 
-3. Knock-Out Events: These are usually observed on a monthly basis to determine if the asset price has exceeded the knock-out level, thereby reducing the likelihood of a knock-out (and consequently increasing the coupon payment).
+1. Selling a Put Option: Let's assume a trader sells a put option on a stock currently priced at 51 with a strike price of 50. **Assume he/she gets X for selling it.**
+2. Initiating the Hedge: To hedge the **negative delta** of the sold put, the trader might buy a certain amount of the stock at the current price of 51.
+3. Price Decline: Suppose the stock price declines to 48. The put option is now closer to being in-the-money, increasing its **negative delta**. To adjust the hedge and maintain a delta-neutral position, the trader would need to sell some of the stock they had previously bought at 51.
 
-4. Knock-In Level: Typically set around 80% of the asset's initial price. In essence, the investor sells a put option to the financial institution at a 100% price level. **Once the asset hits the knock-in level, it is usually already in a deep-in-the-money state.**
 
-5. Knock-In Events: These are observed daily to ascertain whether the asset price is below the knock-in level, thereby increasing the likelihood of a knock-in (and consequently increasing the coupon payment).
+Result: This forces the trader to sell the stock at the reduced price of 48, realizing a loss. The trader effectively bought high at 51 and had to sell low at 48 due to the hedging adjustment, even though the initial intent of the hedge was to mitigate risk.
 
-In addition to the fundamental elements outlined above, there are also advanced conditions that can be incorporated into the snowball option structure. For example, a lock-up period could be specified to preclude knock-out observations in the initial months. Another feature could be a diminishing knock-out level, which gradually reduces over time. Moreover, the knock-out level can be significantly lowered under certain circumstances, such as upon a knock-in event.
+Given that hedging can result in losses, when not considering any other factors, traders would naturally demand a positive price to sell the product.
 
-Below it's a typical product parameter. Suppose start price is $S_0$.
-
-| Parameter    | Value   |
-|-----------|--------|
-| Term    | 12 months | 
-| Index   | 000905.SH |
-| Knock-out level     | 103%$S_0$ |
-| Knock-in level   | 85%$S_0$ |
-| Knock-out event     | Monthly check whether the index current price exceeds the knock-out level |
-| Knock-in event   | Daily check whether the index current price is below the knock-in level |
-| Knock-out coupon     | 20% |
-| bonus coupon     | 20% |
-
-I will use the following example to discuss the investment returns associated with this snowball option:
-
-- Knock-Out Scenario: If a knock-out occurs in any month, i.e., the closing price for the day exceeds 103% of $S_0$, the option will immediately expire. The investor will receive the knock-out coupon payment proportional to the time elapsed. For instance, if the option ends after six months, the coupon payment would be 10%.
-
-- No Knock-Out, No Knock-In Scenario: If neither a knock-out nor a knock-in occurs, the investor will be awarded a bonus coupon, which, in this case, is 20%.
-
-- Knock-In Only Scenario: If only a knock-in event takes place, the investor is considered to have sold a put option. **There would be no return, and the investor bears the loss equivalent to the difference between the initial and terminal prices if the terminal price is lower than the initial price.**
-
-## 1.2 Why it's popular and what might be the risk? <a id='popular'></a>
-In the recent Chinese market, snowball options have become exceedingly popular. While there may be multiple factors contributing to this surge in popularity, the primary one appears to be the extraordinarily high returns that these options promise, with their associated risks seemingly being dismissed as inconsequential. Indeed, the typical duration of a snowball option ranges from 1 to 3 years, and the prospect of the underlying asset declining by 20% within this time frame seems implausible to many Chinese investors. This, coupled with China's low-interest-rate environment, explains the allure of snowball options for many. 
-
-While some institutional players are involved, looking to exploit perceived mispricing, the overwhelming majority of investors are entering the market with either sophisticated or naïve expectations of market direction. Interestingly, there tends to be more buyers of snowball options when stock prices are rising than when they are falling, despite the fact that, based on the initial asset prices, purchasing during a downturn would ostensibly offer greater value.
-
-So, what are the risks involved? Fundamentally, snowball options architect their structure to widen the variance, simultaneously offering structured high returns and uncontrollable, potentially catastrophic losses.
-
-Take, for instance, the market plunge in April 2022, a time when Shanghai, China's largest city, was contemplating a lockdown to deal with an outbreak. The CSI 1000 index plummeted, reaching a low closing price of 5431.61. On that particular day, approximately half of the snowball options purchased within the previous two years would have triggered a knock-in event, exposing many investors to enormous losses through the embedded put options. While the actual losses were mitigated to some extent due to favorable market performance in 2021—leading many snowball options to knock out earlier—those acquired during the peak period of 2021 were almost universally subjected to heavy losses. This vulnerable period spanned nearly four months, and investors who purchased snowball options during this time are likely to incur staggering losses, potentially amounting to around 40%. In other words, while snowball options may appear to be risk-neutral products in expectation, they inherently embody a high likelihood of large gains offset by a low probability tail risk of devastating losses, resulting in extremely high variance.
-
+### 1.1.2 A snowball option
+Even though the above example doesn't take into account transaction costs, which would make actual hedging losses even greater, it does provide a perspective. If traders had access to a hedging product that allowed them to sell high and buy low, would they be willing to "pay" for it?
 
 
 # 2. How to model it? <a id="model"></a>
