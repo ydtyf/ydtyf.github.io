@@ -1,6 +1,6 @@
 ---
 layout: article
-title: Research on Snowball Option--Introduction
+title: Research on Snowball Option--Trader Hedge
 mathjax: true
 ---
 
