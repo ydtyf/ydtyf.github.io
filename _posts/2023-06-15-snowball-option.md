@@ -2,6 +2,7 @@
 layout: article
 title: Research on Snowball Option--Introduction
 mathjax: true
+tags: Quantitative
 ---
 
 This article serves as a summary of my research and learning in the area of options. It is the first in a series focusing on this subject matter: introducing Snowball options and calculating their value.

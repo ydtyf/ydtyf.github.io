@@ -2,6 +2,7 @@
 layout: article
 title: Research on Snowball Option--Trader Hedge
 mathjax: true
+tags: Quantitative
 ---
 
 This is the second article of the series, discussing how traders can profit from this structure and how to hedge against potential risks.
