@@ -49,7 +49,7 @@ header:
       fr-LU   : *FR
       tr      : &TR       
       # @end locale config
-    url: /archive.html
+    url: /archive.html?tag=Quantitative
   
   - titles:
       # @start locale config
@@ -101,7 +101,7 @@ header:
       fr-LU   : *FR
       tr      : &TR       
       # @end locale config
-    url: /archive.html
+    url: /archive.html?tag=ML
 
   
 
