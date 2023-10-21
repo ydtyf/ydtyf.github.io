@@ -16,10 +16,10 @@ Below I will discuss the whole project and how I solved the problem.
 
 ## Menu
 
-- [1. Background and Problem Description](#Background-and-Problem-Description)
-  - [1.1 Fusion and SUNIST tokamak](#Fusion-and-SUNIST-tokamak)
-- [Physical Model Setup](#section-2)
-- [Method Discussion](#Method-Discussion)
+- [1. Background and Problem Description ](#1-background-and-problem-description-)
+  - [1.1 Fusion and SUNIST tokamak ](#11-fusion-and-sunist-tokamak-)
+- [Section 2](#section-2)
+- [Method Discussion ](#method-discussion-)
 
 
 # 1. Background and Problem Description <a id="Background-and-Problem-Description"></a>
